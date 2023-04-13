@@ -1,6 +1,6 @@
 namespace CPX.Domain.Abstract.Identifiers;
 
-public abstract class Identifier
+public class Identifier
 {
     protected Identifier(Guid value)
     {
@@ -39,5 +39,10 @@ public abstract class Identifier
     public static implicit operator Guid(Identifier identifier)
     {
         return identifier.Value;
+    }
+
+    public static implicit operator Identifier(string value)
+    {
+        return new Identifier(Guid.Parse(value));
     }
 }

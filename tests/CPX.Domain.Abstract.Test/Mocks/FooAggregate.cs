@@ -13,8 +13,6 @@ public class FooAggregate : AggregateRoot<FooId>, IApplyDomainEvent<FooDomainEve
 
     public void Apply(FooDomainEvent @event)
     {
-        Id = new FooId(Guid.Parse(@event.Id));
-        CreatedAt = @event.CreatedAt;
-        UpdatedAt = @event.CreatedAt;
+        base.Apply(@event);
     }
 }
