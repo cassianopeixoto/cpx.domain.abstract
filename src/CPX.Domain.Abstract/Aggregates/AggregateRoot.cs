@@ -13,13 +13,22 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
     {
     }
 
-    public int Version { get; protected set; } = 0;
+    public int Version { get; private set; } = 0;
+
+    public IReadOnlyCollection<DomainEvent> GetUncommitedEvents()
+    {
+        return uncommitedEvents.AsReadOnly();
+    }
+
+    public void Commit()
+    {
+        uncommitedEvents.Clear();
+    }
 
     protected void Raise(DomainEvent @event)
     {
-        if (uncommitedEvents.Any(o => o.Version.Equals(@event.Version)).Equals(false))
+        if (theVersionDoesNotExist(@event.Version))
         {
-            Version = @event.Version;
             uncommitedEvents.Add(@event);
             this.AsDynamic().Apply(@event);
         }
@@ -33,13 +42,8 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
         UpdatedAt = @event.CreatedAt;
     }
 
-    public IReadOnlyCollection<DomainEvent> GetUncommitedEvents()
+    private bool theVersionDoesNotExist(int version)
     {
-        return uncommitedEvents.AsReadOnly();
-    }
-
-    public void Commit()
-    {
-        uncommitedEvents.Clear();
+        return uncommitedEvents.Any(o => o.Version.Equals(version)).Equals(false);
     }
 }
