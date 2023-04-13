@@ -16,7 +16,7 @@ public class DomainEventTest
         var mockDomainEvent = new Mock<DomainEvent>(aggregateId, version, createdAt);
         var domainEvent = mockDomainEvent.Object;
         // Assert
-        Assert.Equal(id, domainEvent.Id);
+        Assert.Equal(id, domainEvent.AggregateId);
         Assert.Equal(version, domainEvent.Version);
         Assert.Equal(createdAt, domainEvent.CreatedAt);
     }

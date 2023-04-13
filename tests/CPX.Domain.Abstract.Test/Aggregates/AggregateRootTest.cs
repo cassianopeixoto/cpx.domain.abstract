@@ -38,7 +38,7 @@ public class AggregateRootTest
 
         var @event = fooAggregate.GetUncommitedEvents().Single();
         Assert.IsType<FooDomainEvent>(@event);
-        Assert.Equal(id.ToString(), @event.Id);
+        Assert.Equal(id.ToString(), @event.AggregateId);
         Assert.Equal(createdAt, @event.CreatedAt);
 
         fooAggregate.Commit();

@@ -36,7 +36,7 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
 
     protected void Apply(DomainEvent @event)
     {
-        Id = @event.Id;
+        Id = @event.AggregateId;
         Version = @event.Version;
         CreatedAt = @event.CreatedAt;
         UpdatedAt = @event.CreatedAt;
