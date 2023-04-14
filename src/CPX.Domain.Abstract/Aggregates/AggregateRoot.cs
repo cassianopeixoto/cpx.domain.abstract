@@ -27,7 +27,7 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
 
     protected void Raise(DomainEvent @event)
     {
-        if (theVersionDoesNotExist(@event.Version))
+        if (TheVersionDoesNotExist(@event.Version))
         {
             uncommitedEvents.Add(@event);
             this.AsDynamic().Apply(@event);
@@ -42,7 +42,7 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
         UpdatedAt = @event.CreatedAt;
     }
 
-    private bool theVersionDoesNotExist(int version)
+    private bool TheVersionDoesNotExist(int version)
     {
         return uncommitedEvents.Any(o => o.Version.Equals(version)).Equals(false);
     }
