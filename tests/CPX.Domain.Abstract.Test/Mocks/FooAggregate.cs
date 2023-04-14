@@ -1,3 +1,4 @@
+using CPX.Domain.Abstract.Aggregates;
 using CPX.Domain.Abstract.Events;
 
 namespace CPX.Domain.Abstract.Test.Mocks;

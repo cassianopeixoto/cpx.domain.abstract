@@ -1,3 +1,4 @@
+using CPX.Domain.Abstract.Aggregates;
 using CPX.Domain.Abstract.Identifiers;
 using CPX.Domain.Abstract.Test.Mocks;
 

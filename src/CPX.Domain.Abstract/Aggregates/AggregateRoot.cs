@@ -3,6 +3,8 @@ using CPX.Domain.Abstract.Identifiers;
 using CPX.Domain.Abstract.Events;
 using ReflectionMagic;
 
+namespace CPX.Domain.Abstract.Aggregates;
+
 public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identifier
 {
     private readonly List<DomainEvent> uncommitedEvents = new List<DomainEvent>();
