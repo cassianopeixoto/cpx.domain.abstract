@@ -9,8 +9,10 @@ public class Identifier
 
     public Guid Value { get; }
 
-    public bool Equals(Identifier identifier)
+    public bool Equals(Identifier? identifier)
     {
+        if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+
         return Value == identifier.Value;
     }
 
@@ -18,7 +20,7 @@ public class Identifier
     {
         var identifier = obj as Identifier;
 
-        return identifier is not null && Equals(identifier);
+        return Equals(identifier);
     }
 
     public override int GetHashCode()
@@ -28,21 +30,30 @@ public class Identifier
 
     public static bool operator ==(Identifier first, Identifier second)
     {
+        if (first is null) throw new ArgumentNullException(nameof(first));
+
         return first.Equals(second);
     }
 
     public static bool operator !=(Identifier first, Identifier second)
     {
+        if (first is null) throw new ArgumentNullException(nameof(first));
+
         return first.Equals(second) == false;
     }
 
     public static implicit operator Guid(Identifier identifier)
     {
+        if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+
         return identifier.Value;
     }
 
     public static implicit operator Identifier(string value)
     {
-        return new Identifier(Guid.Parse(value));
+        if (Guid.TryParse(value, out Guid id).Equals(false))
+            throw new ArgumentException($"Cannot convert '{value}' to Guid");
+
+        return new Identifier(id);
     }
 }
