@@ -2,6 +2,8 @@ using CPX.Domain.Abstract.Aggregates;
 using CPX.Domain.Abstract.Identifiers;
 using CPX.Domain.Abstract.Test.Mocks;
 
+namespace CPX.Domain.Abstract.Test.Aggregates;
+
 public class AggregateRootTest
 {
     [Fact]
