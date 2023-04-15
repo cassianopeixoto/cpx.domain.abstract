@@ -11,15 +11,14 @@ public class Identifier
 
     public bool Equals(Identifier? identifier)
     {
-        if (identifier is null) throw new ArgumentNullException(nameof(identifier));
-
-        return Value == identifier.Value;
+        ThrowArgumentNullException(identifier);
+        return identifier != null && identifier.Value == Value;
     }
 
     public override bool Equals(object? obj)
     {
+        ThrowArgumentNullException(obj);
         var identifier = obj as Identifier;
-
         return Equals(identifier);
     }
 
@@ -28,23 +27,24 @@ public class Identifier
         return Value.GetHashCode();
     }
 
-    public static bool operator ==(Identifier first, Identifier second)
+    public static bool operator ==(Identifier? first, Identifier? second)
     {
-        if (first is null) throw new ArgumentNullException(nameof(first));
-
-        return first.Equals(second);
+        ThrowArgumentNullException(first, second);
+        return first != null && first.Equals(second);
     }
 
-    public static bool operator !=(Identifier first, Identifier second)
+    public static bool operator !=(Identifier? first, Identifier? second)
     {
-        if (first is null) throw new ArgumentNullException(nameof(first));
-
-        return first.Equals(second) == false;
+        ThrowArgumentNullException(first, second);
+        return first != null && first.Equals(second) == false;
     }
 
-    public static implicit operator Guid(Identifier identifier)
+    public static implicit operator Guid(Identifier? identifier)
     {
-        if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+        ThrowArgumentNullException(identifier);
+
+        if (identifier == null)
+            return Guid.Empty;
 
         return identifier.Value;
     }
@@ -55,5 +55,16 @@ public class Identifier
             throw new ArgumentException($"Cannot convert '{value}' to Guid");
 
         return new Identifier(id);
+    }
+
+    private static void ThrowArgumentNullException(object? first, object? second)
+    {
+        ThrowArgumentNullException(first);
+        ThrowArgumentNullException(second);
+    }
+
+    private static void ThrowArgumentNullException(object? identifier)
+    {
+        if (identifier == null) throw new ArgumentNullException(nameof(identifier));
     }
 }
