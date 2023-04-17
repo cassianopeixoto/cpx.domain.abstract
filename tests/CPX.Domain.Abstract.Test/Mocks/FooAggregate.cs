@@ -7,9 +7,9 @@ public class FooAggregate : AggregateRoot<FooId>, IApplyDomainEvent<FooDomainEve
 {
     public FooAggregate() { }
 
-    public FooAggregate(FooId fooId, DateTimeOffset createdAt) : base(fooId, createdAt)
+    public FooAggregate(FooId fooId, DateTimeOffset createdAt, Guid createdBy)
     {
-        Raise(new FooDomainEvent(fooId, Version + 1, createdAt));
+        Raise(new FooDomainEvent(fooId, Version + 1, createdAt, createdBy));
     }
 
     public void Apply(FooDomainEvent @event)

@@ -9,13 +9,7 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
 {
     private readonly List<DomainEvent> uncommitedEvents = new List<DomainEvent>();
 
-    protected AggregateRoot() { }
-
-    protected AggregateRoot(Identifier aggregateId, DateTimeOffset createdAt) : base(aggregateId, createdAt)
-    {
-    }
-
-    public int Version { get; private set; } = 0;
+    public int Version { get; protected set; } = 0;
 
     public IReadOnlyCollection<DomainEvent> GetUncommitedEvents()
     {
@@ -38,10 +32,9 @@ public abstract class AggregateRoot<TIdentity> : Entity where TIdentity : Identi
 
     protected void Apply(DomainEvent @event)
     {
-        Id = @event.AggregateId;
-        Version = @event.Version;
-        CreatedAt = @event.CreatedAt;
         UpdatedAt = @event.CreatedAt;
+        UpdatedBy = @event.CreatedBy;
+        Version = @event.Version;
     }
 
     private bool TheVersionDoesNotExist(int version)

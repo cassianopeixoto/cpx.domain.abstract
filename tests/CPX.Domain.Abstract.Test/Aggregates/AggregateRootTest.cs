@@ -29,13 +29,15 @@ public class AggregateRootTest
         var id = Guid.NewGuid();
         var fooId = new FooId(id);
         var createdAt = DateTimeOffset.Now;
+        var createdBy = Guid.NewGuid();
         var version = 1;
         // Act
-        var fooAggregate = new FooAggregate(fooId, createdAt);
+        var fooAggregate = new FooAggregate(fooId, createdAt, createdBy);
         // Assert
         Assert.Equal(fooId, fooAggregate.Id);
         Assert.Equal(createdAt, fooAggregate.CreatedAt);
         Assert.Equal(createdAt, fooAggregate.UpdatedAt);
+        Assert.Equal(createdBy, fooAggregate.UpdatedBy);
         Assert.Equal(version, fooAggregate.Version);
         Assert.Equal(fooAggregate.Version, fooAggregate.GetUncommitedEvents().Count);
 
@@ -43,6 +45,7 @@ public class AggregateRootTest
         Assert.IsType<FooDomainEvent>(@event);
         Assert.Equal(id.ToString(), @event.AggregateId);
         Assert.Equal(createdAt, @event.CreatedAt);
+        Assert.Equal(createdBy, @event.CreatedBy);
 
         fooAggregate.Commit();
 
@@ -56,7 +59,8 @@ public class AggregateRootTest
         var id = new FooId(Guid.NewGuid());
         var version = 1;
         var createdAt = DateTimeOffset.Now;
-        var @event = new FooDomainEvent(id, version, createdAt);
+        var createdBy = Guid.NewGuid();
+        var @event = new FooDomainEvent(id, version, createdAt, createdBy);
         // Act
         var aggregate = new FooAggregate();
         aggregate.Apply(@event);
@@ -65,5 +69,6 @@ public class AggregateRootTest
         Assert.Equal(version, aggregate.Version);
         Assert.Equal(createdAt, aggregate.CreatedAt);
         Assert.Equal(createdAt, aggregate.UpdatedAt);
+        Assert.Equal(createdBy, aggregate.UpdatedBy);
     }
 }

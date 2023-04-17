@@ -16,13 +16,15 @@ public class DomainEventTest
         var id = aggregateId.ToString();
         var version = 1;
         var createdAt = DateTimeOffset.Now;
+        var createdBy = Guid.NewGuid();
         // Act
-        var mockDomainEvent = new Mock<DomainEvent>(aggregateId, version, createdAt);
+        var mockDomainEvent = new Mock<DomainEvent>(aggregateId, version, createdAt, createdBy);
         var domainEvent = mockDomainEvent.Object;
         // Assert
         Assert.Equal(id, domainEvent.AggregateId);
         Assert.Equal(version, domainEvent.Version);
         Assert.Equal(createdAt, domainEvent.CreatedAt);
+        Assert.Equal(createdBy, domainEvent.CreatedBy);
     }
 
     [Fact]
@@ -32,11 +34,12 @@ public class DomainEventTest
         var aggregateId = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd3");
         var version = 1;
         var createdAt = new DateTimeOffset(new DateTime(2013, 4, 13));
+        var createdBy = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd2");
         // Act
-        var @event = new FooDomainEvent(aggregateId, version, createdAt);
+        var @event = new FooDomainEvent(aggregateId, version, createdAt, createdBy);
         var serialized = SerializeObject(@event);
         // Assert
-        Assert.Equal("{\"aggregateId\":\"65aee9c3-4d97-499a-943f-e8be93c31fd3\",\"version\":1,\"createdAt\":\"2013-04-13T00:00:00+01:00\"}", serialized);
+        Assert.Equal("{\"aggregateId\":\"65aee9c3-4d97-499a-943f-e8be93c31fd3\",\"version\":1,\"createdBy\":\"65aee9c3-4d97-499a-943f-e8be93c31fd2\",\"createdAt\":\"2013-04-13T00:00:00+01:00\"}", serialized);
     }
 
     [Fact]
@@ -46,8 +49,9 @@ public class DomainEventTest
         var aggregateId = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd3");
         var version = 1;
         var createdAt = new DateTimeOffset(new DateTime(2013, 4, 13));
+        var createdBy = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd2");
         // Act
-        var @event = new FooDomainEvent(aggregateId, version, createdAt);
+        var @event = new FooDomainEvent(aggregateId, version, createdAt, createdBy);
         var serialized = SerializeObject(@event);
         var deserializedEvent = JsonConvert.DeserializeObject<FooDomainEvent>(serialized);
         // Assert
@@ -57,6 +61,7 @@ public class DomainEventTest
             Assert.Equal(aggregateId.ToString(), deserializedEvent.AggregateId);
             Assert.Equal(version, deserializedEvent.Version);
             Assert.Equal(createdAt, deserializedEvent.CreatedAt);
+            Assert.Equal(createdBy, deserializedEvent.CreatedBy);
         }
     }
 
