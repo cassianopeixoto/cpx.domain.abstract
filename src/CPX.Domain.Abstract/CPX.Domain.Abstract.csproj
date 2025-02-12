@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<PackageId>CPX.Domain.Abstract</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Peixoto, Cassiano</Authors>
 		<Company></Company>
 		<Description>A lightweight library for implementing Domain-Driven Design (DDD) concepts, including Aggregates, Entities, Value Objects, Enumerations, Domain Events, and Strongly Typed Identifiers. Designed for clean, maintainable, and expressive domain modeling in .NET applications. 🚀</Description>
