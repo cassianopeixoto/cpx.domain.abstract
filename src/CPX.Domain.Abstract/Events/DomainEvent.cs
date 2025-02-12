@@ -2,16 +2,8 @@ namespace CPX.Domain.Abstract.Events;
 
 using CPX.Events.Abstract;
 
-public abstract class DomainEvent : Event
+public abstract class DomainEvent(Guid aggregateId, DateTimeOffset createdAt, Guid createdBy) : Event(createdAt)
 {
-    protected DomainEvent(Guid aggregateId, int version, DateTimeOffset createdAt, Guid createdBy) : base(createdAt)
-    {
-        AggregateId = aggregateId.ToString();
-        Version = version;
-        CreatedBy = createdBy;
-    }
-
-    public string AggregateId { get; }
-    public int Version { get; }
-    public Guid CreatedBy { get; }
+    public string AggregateId { get; init; } = aggregateId.ToString();
+    public Guid CreatedBy { get; init; } = createdBy;
 }

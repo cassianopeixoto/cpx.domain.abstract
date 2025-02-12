@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\cpx.events.abstract\src\CPX.Events.Abstract\CPX.Events.Abstract.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ReflectionMagic" Version="4.1.0" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<PackageId>CPX.Domain.Abstract</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>Peixoto, Cassiano</Authors>
+		<Company></Company>
+		<Description>A lightweight library for implementing Domain-Driven Design (DDD) concepts, including Aggregates, Entities, Value Objects, Enumerations, Domain Events, and Strongly Typed Identifiers. Designed for clean, maintainable, and expressive domain modeling in .NET applications. 🚀</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/cassianopeixoto/cpx.domain.abstract</RepositoryUrl>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CPX.Events.Abstract" Version="1.0.0" />
+	</ItemGroup>
 </Project>

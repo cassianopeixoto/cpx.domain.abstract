@@ -2,10 +2,10 @@ using CPX.Domain.Abstract.Identifiers;
 
 namespace CPX.Domain.Abstract.Entities;
 
-public abstract class Entity
+public abstract class Entity(Identifier id, DateTimeOffset createdAt, Guid updatedBy, DateTimeOffset updatedAt)
 {
-    public Identifier Id { get; protected set; }
-    public DateTimeOffset CreatedAt { get; protected set; }
-    public Guid UpdatedBy { get; protected set; }
-    public DateTimeOffset UpdatedAt { get; protected set; }
+    public Identifier Id { get; init; } = id;
+    public DateTimeOffset CreatedAt { get; init; } = createdAt;
+    public Guid UpdatedBy { get; protected set; } = updatedBy;
+    public DateTimeOffset UpdatedAt { get; protected set; } = updatedAt;
 }

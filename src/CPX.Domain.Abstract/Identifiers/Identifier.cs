@@ -11,9 +11,11 @@ public class Identifier
 
     public static Identifier New() => new(Guid.NewGuid());
 
+    public static Identifier New(Guid value) => new(value);
+
     public bool Equals(Identifier identifier)
     {
-        return identifier != null && identifier.Value == Value;
+        return identifier is not null && identifier.Value == Value;
     }
 
     public override bool Equals(object? obj)
@@ -33,7 +35,7 @@ public class Identifier
 
     public static implicit operator Guid(Identifier identifier)
     {
-        if (identifier == null)
+        if (identifier is null)
             return Guid.Empty;
 
         return identifier.Value;
@@ -50,5 +52,14 @@ public class Identifier
             throw new ArgumentException($"Cannot convert '{value}' to Guid");
 
         return new Identifier(id);
+    }
+    public static bool operator ==(Identifier left, Identifier right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Identifier left, Identifier right)
+    {
+        return !(left == right);
     }
 }

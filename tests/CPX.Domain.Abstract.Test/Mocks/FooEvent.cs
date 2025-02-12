@@ -2,9 +2,7 @@ using CPX.Domain.Abstract.Events;
 
 namespace CPX.Domain.Abstract.Test.Mocks;
 
-public class FooDomainEvent : DomainEvent
+public class FooDomainEvent(Guid aggregateId, DateTimeOffset createdAt, Guid createdBy, string foo) : DomainEvent(aggregateId, createdAt, createdBy)
 {
-    public FooDomainEvent(Guid aggregateId, int version, DateTimeOffset createdAt, Guid createdBy) : base(aggregateId, version, createdAt, createdBy)
-    {
-    }
+    public string Foo { get; init; } = foo;
 }

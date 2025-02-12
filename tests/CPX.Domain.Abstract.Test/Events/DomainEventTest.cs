@@ -12,17 +12,17 @@ public class DomainEventTest
         // Arrange
         var aggregateId = Guid.NewGuid();
         var id = aggregateId.ToString();
-        var version = 1;
         var createdAt = DateTimeOffset.Now;
         var createdBy = Guid.NewGuid();
+        var foo = "foo";
         // Act
-        var domainEvent = new FooDomainEvent(aggregateId, version, createdAt, createdBy);
+        var @event = new FooDomainEvent(aggregateId, createdAt, createdBy, foo);
         // Assert
-        Assert.IsAssignableFrom<DomainEvent>(domainEvent);
-        Assert.Equal(id, domainEvent.AggregateId);
-        Assert.Equal(version, domainEvent.Version);
-        Assert.Equal(createdAt, domainEvent.CreatedAt);
-        Assert.Equal(createdBy, domainEvent.CreatedBy);
+        Assert.IsAssignableFrom<DomainEvent>(@event);
+        Assert.Equal(id, @event.AggregateId);
+        Assert.Equal(createdAt, @event.CreatedAt);
+        Assert.Equal(createdBy, @event.CreatedBy);
+        Assert.Equal(foo, @event.Foo);
     }
 
     [Fact]
@@ -30,14 +30,14 @@ public class DomainEventTest
     {
         // Arrange
         var aggregateId = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd3");
-        var version = 1;
         var createdAt = new DateTimeOffset(new DateTime(2013, 4, 13));
         var createdBy = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd2");
+        var foo = "foo";
         // Act
-        var @event = new FooDomainEvent(aggregateId, version, createdAt, createdBy);
+        var @event = new FooDomainEvent(aggregateId, createdAt, createdBy, foo);
         var serialized = JsonEventConvert.Serialize(@event);
         // Assert
-        Assert.Equal("{\"aggregateId\":\"65aee9c3-4d97-499a-943f-e8be93c31fd3\",\"version\":1,\"createdBy\":\"65aee9c3-4d97-499a-943f-e8be93c31fd2\",\"createdAt\":\"2013-04-13T00:00:00+01:00\"}", serialized);
+        Assert.Equal("{\"foo\":\"foo\",\"aggregateId\":\"65aee9c3-4d97-499a-943f-e8be93c31fd3\",\"createdBy\":\"65aee9c3-4d97-499a-943f-e8be93c31fd2\",\"createdAt\":\"2013-04-13T00:00:00+01:00\"}", serialized);
     }
 
     [Fact]
@@ -45,11 +45,11 @@ public class DomainEventTest
     {
         // Arrange
         var aggregateId = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd3");
-        var version = 1;
         var createdAt = new DateTimeOffset(new DateTime(2013, 4, 13));
         var createdBy = Guid.Parse("65aee9c3-4d97-499a-943f-e8be93c31fd2");
+        var foo = "foo";
         // Act
-        var @event = new FooDomainEvent(aggregateId, version, createdAt, createdBy);
+        var @event = new FooDomainEvent(aggregateId, createdAt, createdBy, foo);
         var serialized = JsonEventConvert.Serialize(@event);
         var deserializedEvent = JsonEventConvert.Deserialize<FooDomainEvent>(serialized);
         // Assert
@@ -57,9 +57,9 @@ public class DomainEventTest
         if (deserializedEvent != null)
         {
             Assert.Equal(aggregateId.ToString(), deserializedEvent.AggregateId);
-            Assert.Equal(version, deserializedEvent.Version);
             Assert.Equal(createdAt, deserializedEvent.CreatedAt);
             Assert.Equal(createdBy, deserializedEvent.CreatedBy);
+            Assert.Equal(foo, deserializedEvent.Foo);
         }
     }
 }

@@ -10,8 +10,7 @@ public class IdentifierTest
         // Arrange
         var id = Guid.NewGuid();
         // Act
-        var mockIdentifier = new Mock<Identifier>(id);
-        var identifier = mockIdentifier.Object;
+        var identifier = Identifier.New(id);
         // Assert
         Assert.Equal(id, identifier.Value);
     }
@@ -21,10 +20,8 @@ public class IdentifierTest
     {
         // Arrange
         var id = Guid.NewGuid();
-        var firstMockIdentifier = new Mock<Identifier>(id);
-        var firstIdentifier = firstMockIdentifier.Object;
-        var secondMockIdentifier = new Mock<Identifier>(id);
-        var secondIdentifier = secondMockIdentifier.Object;
+        var firstIdentifier = Identifier.New(id);
+        var secondIdentifier = Identifier.New(id);
         // Act
         var areEqualsUsingMethod = firstIdentifier.Equals(secondIdentifier);
         var areEqualsUsingOperator = firstIdentifier == secondIdentifier;
@@ -39,10 +36,8 @@ public class IdentifierTest
         // Arrange
         var firstId = Guid.NewGuid();
         var secondId = Guid.NewGuid();
-        var firstMockIdentifier = new Mock<Identifier>(firstId);
-        var firstIdentifier = firstMockIdentifier.Object;
-        var secondMockIdentifier = new Mock<Identifier>(secondId);
-        var secondIdentifier = secondMockIdentifier.Object;
+        var firstIdentifier = Identifier.New(firstId);
+        var secondIdentifier = Identifier.New(secondId);
         // Act
         var areEqualsUsingMethod = firstIdentifier.Equals(secondIdentifier);
         var areEqualsUsingOperator = firstIdentifier != secondIdentifier;
@@ -56,8 +51,7 @@ public class IdentifierTest
     {
         // Arrange
         var id = Guid.NewGuid();
-        var mockIdentifier = new Mock<Identifier>(id);
-        var identifier = mockIdentifier.Object;
+        var identifier = Identifier.New(id);
         // Act
         Guid convertedId = identifier;
         // Assert

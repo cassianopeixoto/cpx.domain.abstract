@@ -9,15 +9,17 @@ public class EntityTest
     public void Should_be_able_to_create()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var mockIdentifier = new Mock<Identifier>(id);
-        var identifier = mockIdentifier.Object;
+        var id = Identifier.New();
         var createdAt = DateTimeOffset.Now;
+        var updatedBy = Guid.NewGuid();
+        var updatedAt = DateTimeOffset.Now;
         // Act
-        var entityMock = new Mock<Entity>(identifier, createdAt);
+        var entityMock = new Mock<Entity>(id, createdAt, updatedBy, updatedAt);
         var entity = entityMock.Object;
         // Assert
-        Assert.Equal(identifier, entity.Id);
+        Assert.Equal(id, entity.Id);
         Assert.Equal(createdAt, entity.CreatedAt);
+        Assert.Equal(updatedBy, entity.UpdatedBy);
+        Assert.Equal(updatedAt, entity.UpdatedAt);
     }
 }
